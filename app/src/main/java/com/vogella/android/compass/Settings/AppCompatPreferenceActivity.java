@@ -1,4 +1,4 @@
-package com.vogella.android.compass;
+package com.vogella.android.compass.Settings;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

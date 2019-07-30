@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity android:name=".Compass.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -25,12 +25,16 @@
         <activity
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:name=".Level"
+            android:name=".Leveler.Level"
             android:label="@string/title_activity_level"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".SettingActivity"
+        <activity android:name=".Settings.SettingActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".Time.ClockActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

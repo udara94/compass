@@ -1,8 +1,7 @@
-package com.vogella.android.compass;
+package com.vogella.android.compass.Compass;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.hardware.Sensor;
@@ -20,12 +19,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,16 +45,16 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import com.vogella.android.compass.BuildConfig;
+import com.vogella.android.compass.Time.ClockActivity;
+import com.vogella.android.compass.Leveler.Level;
+import com.vogella.android.compass.R;
+import com.vogella.android.compass.Settings.SettingActivity;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import butterknife.BindView;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -68,10 +64,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView txtLocationResult;
     private TextView mCity;
     private TextView mProvince;
-    private Button mLevelScreen;
+   // private Button mLevelScreen;
     //private Button mSettingScreen;
     private ImageView mSettingBtn;
     private ImageView mShareBtn;
+    private ImageView mLevelBtn;
+    private ImageView mClockBtn;
 
 
     // record the compass picture angle turned
@@ -129,30 +127,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         txtLocationResult = (TextView) findViewById(R.id.location_result);
         mCity = (TextView) findViewById(R.id.city);
         mProvince = (TextView) findViewById(R.id.province);
-        mLevelScreen = (Button) findViewById(R.id.go_to_level);
+       // mLevelScreen = (Button) findViewById(R.id.go_to_level);
        // mSettingScreen = (Button) findViewById(R.id.go_to_settings);
         mSettingBtn = (ImageView) findViewById(R.id.setting);
         mShareBtn = (ImageView) findViewById(R.id.share);
-
+        mLevelBtn = (ImageView) findViewById(R.id.level);
+        mClockBtn = (ImageView) findViewById(R.id.clock);
 
         init();
         startLocationButtonClick();
 
-        mLevelScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(), Level.class);
-                startActivity(i);
-            }
-        });
-
-//        mSettingScreen.setOnClickListener(new View.OnClickListener() {
+//        mLevelScreen.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                Intent i = new Intent(getBaseContext(), SettingActivity.class);
+//                Intent i = new Intent(getBaseContext(), Level.class);
 //                startActivity(i);
 //            }
 //        });
+
+
         mSettingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,6 +161,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 String shareBody =  "Lat: " + mCurrentLocation.getLatitude() + ", " + "Lng: " + mCurrentLocation.getLongitude() +"\n"+city+", "+state;
                 myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
                 startActivity(Intent.createChooser(myIntent, "Share Using"));
+            }
+        });
+        mLevelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), Level.class);
+                startActivity(i);
+            }
+        });
+        mClockBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), ClockActivity.class);
+                startActivity(i);
             }
         });
     }

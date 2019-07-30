@@ -1,4 +1,4 @@
-package com.vogella.android.compass;
+package com.vogella.android.compass.Leveler;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -33,33 +33,6 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:src="@drawable/compass" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="top">
-
-            <ImageView
-                android:id="@+id/setting"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_settings_2"
-                android:layout_gravity="right"
-                android:layout_alignParentRight="true"/>
-
-
-            <ImageView
-                android:id="@+id/share"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_share_2"
-                android:layout_gravity="left"
-                />
-
-    </RelativeLayout>
 
 
     <RelativeLayout
@@ -98,14 +71,45 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center">
-                <Button
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/setting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="level"
-                    android:id="@+id/go_to_level"/>
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@mipmap/ic_settings_2" />
+
+
+                <ImageView
+                    android:id="@+id/share"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_share_2" />
+
+                <ImageView
+                    android:id="@+id/level"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_level_2" />
+
+                <ImageView
+                    android:id="@+id/clock"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_clock_2" />
+                <!--<Button-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="level"-->
+                    <!--android:id="@+id/go_to_level"/>-->
                 <!--<Button-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->

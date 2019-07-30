@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_layout">
+
+
+
+
+    <LinearLayout
+        android:id="@+id/num_picker_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center">
+            <TextView
+                android:id="@+id/lbl_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hours"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp" />
+            <NumberPicker
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/lbl_hours"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/hour_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="180dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center">
+            <TextView
+                android:id="@+id/lbl_minutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Minutes"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp" />
+            <NumberPicker
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/lbl_minutes"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/minutes_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="180dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center">
+            <TextView
+                android:id="@+id/lbl_seconds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seconds"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp" />
+            <NumberPicker
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/lbl_seconds"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/seconds_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="180dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/time_text_layout">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:id="@+id/txt_hour"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"/>
+            <TextView
+                android:layout_toRightOf="@+id/txt_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:id="@+id/txt_minutes"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:id="@+id/txt_seconds"
+                android:layout_toRightOf="@+id/txt_minutes"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/start_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_below="@+id/time_text_layout">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start"
+                android:id="@+id/btn_start"
+                />
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/pause_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_below="@+id/time_text_layout"
+            >
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pause"
+                android:id="@+id/btn_pause"
+
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resume"
+                android:id="@+id/btn_resume"
+                android:visibility="gone"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:id="@+id/btn_cancel"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

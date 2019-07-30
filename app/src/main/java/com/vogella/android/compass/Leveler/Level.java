@@ -1,4 +1,4 @@
-package com.vogella.android.compass;
+package com.vogella.android.compass.Leveler;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -9,6 +9,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.vogella.android.compass.Leveler.DrawView;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
