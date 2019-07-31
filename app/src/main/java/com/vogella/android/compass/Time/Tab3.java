@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,9 +48,12 @@ public class Tab3 extends Fragment {
     private long mMinutes = 0;
     private long totalMilliSeconds =0;
     private Button btnStart, btnPause, btnCancel, btnResume;
-    private RelativeLayout startLayout;
+    private LinearLayout startLayout;
     private LinearLayout pauseLayout, numPickLayout;
     private CountDownTimer waitTimer;
+    private ProgressBar progressBar;
+    private int pStatus = 0;
+    private int decrementValue = 0;
 
 
     private OnFragmentInteractionListener mListener;
@@ -100,9 +104,11 @@ public class Tab3 extends Fragment {
             btnCancel = (Button) rootView.findViewById(R.id.btn_cancel);
             btnResume = (Button) rootView.findViewById(R.id.btn_resume);
 
-            startLayout = (RelativeLayout) rootView.findViewById(R.id.start_layout);
+            startLayout = (LinearLayout) rootView.findViewById(R.id.start_layout);
             pauseLayout = (LinearLayout) rootView.findViewById(R.id.pause_layout);
             numPickLayout = (LinearLayout) rootView.findViewById(R.id.num_picker_layout);
+
+            progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
 
            // btnPause.setVisibility(View.VISIBLE);
             //btnResume.setVisibility(View.GONE);
@@ -123,9 +129,17 @@ public class Tab3 extends Fragment {
         ArrayList<String> minutesList = new ArrayList<>();
 
         for(int i = 0 ; i<= 60; i++){
-            String num = Integer.toString(i);
-            secondList.add(num);
-            minutesList.add(num);
+
+            if(i<10){
+                String num = "0"+Integer.toString(i);
+                secondList.add(num);
+                minutesList.add(num);
+            }else {
+                String num = Integer.toString(i);
+                secondList.add(num);
+                minutesList.add(num);
+            }
+
 
         }
         for(int i = 0; i< 100; i++){
@@ -215,8 +229,11 @@ public class Tab3 extends Fragment {
 
     private void startCounter() {
         totalMilliSeconds = (mSeconds * 1000)+ (mMinutes * 60 * 1000)+ (mHours * 60 * 60 * 1000);
+        //decrementValue = totalMilliSeconds/100;
+        pStatus = (int)totalMilliSeconds;
+        progressBar.setMax((int)totalMilliSeconds);
        // countDownStart();
-        System.out.println("===================>totalMilliSeconds"+totalMilliSeconds );
+        System.out.println("===================>decrementValue"+decrementValue );
         if(totalMilliSeconds != 0){
             countDouwnTimer();
             toggleButtonSet(true);
@@ -246,6 +263,7 @@ public class Tab3 extends Fragment {
         mHours = 0;
         mMinutes = 0;
         mSeconds = 0;
+        //pStatus = 0;
     }
 
     private void countDouwnTimer(){
@@ -257,7 +275,7 @@ public class Tab3 extends Fragment {
                 //send messages or some other action
                 long futureDate = new Date().getTime()+ totalMilliSeconds;
                 long currentDate = new Date().getTime();
-                System.out.println("===================>hello" );
+
                 long diff = futureDate - currentDate;
 
                 long hours = diff / (60 * 60 * 1000);
@@ -271,12 +289,19 @@ public class Tab3 extends Fragment {
                 txtHours.setText("" + String.format("%02d", hours));
                 txtMinutes.setText("" + String.format("%02d", minutes));
                 txtSeconds.setText("" + String.format("%02d", seconds));
+
+
+                    progressBar.setProgress(pStatus);
+                    pStatus-= 1000;
                 totalMilliSeconds = totalMilliSeconds -1000;
+                System.out.println("===================>totalMilliSeconds"+totalMilliSeconds );
+                System.out.println("===================>pStatus"+pStatus );
             }
 
 
             public void onFinish() {
                toggleButtonSet(false);
+                progressBar.setProgress(pStatus);
                System.out.println("===================>finished");
             }
         }.start();
