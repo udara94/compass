@@ -1,14 +1,25 @@
 package com.vogella.android.compass.Time;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DigitalClock;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.vogella.android.compass.R;
+
+import butterknife.ButterKnife;
 
 
 public class Tab1 extends Fragment {
@@ -16,6 +27,7 @@ public class Tab1 extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private DigitalClock digitalClock;
 
     private String mParam1;
     private String mParam2;
@@ -49,7 +61,27 @@ public class Tab1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab1, container, false);
+        View rootView = null;
+        try {
+            rootView = inflater.inflate(R.layout.fragment_tab1, container, false);
+
+            ButterKnife.bind(this, rootView);
+            digitalClock = rootView.findViewById(R.id.digitalClock1);
+
+            initializeData();
+
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+        return rootView;
+    }
+
+    private void initializeData() {
+
+        Shader textShader=new LinearGradient(0, 0, 0, 0, new int[]{Color.WHITE,Color.BLUE}, new float[]{1, 0}, Shader.TileMode.CLAMP);
+        digitalClock.getPaint().setShader(textShader);
     }
 
     public void onButtonPressed(Uri uri) {

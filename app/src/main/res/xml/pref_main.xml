@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="General">
-        <EditTextPreference
-            android:defaultValue="@string/default_gallery_storage"
-            android:key="@string/key_gallery_name"
-            android:summary="@string/default_gallery_storage"
-            android:title="@string/title_gallery_storage" />
+        <!--<EditTextPreference-->
+            <!--android:defaultValue="@string/default_gallery_storage"-->
+            <!--android:key="@string/key_gallery_name"-->
+            <!--android:summary="@string/default_gallery_storage"-->
+            <!--android:title="@string/title_gallery_storage" />-->
 
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="@string/key_upload_over_wifi"
-            android:summary="@string/summary_upload_over_wifi"
-            android:title="@string/title_auto_upload" />
+            android:key="@string/key_display_city"
+            android:summary="@string/summery_display_city"
+            android:title="@string/title_display_city" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/key_display_province"
+            android:summary="@string/summery_display_province"
+            android:title="@string/title_display_province" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/key_display_location"
+            android:summary="@string/summery_display_location"
+            android:title="@string/title_display_location" />
+
 
         <ListPreference
             android:defaultValue="3"

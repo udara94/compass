@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ public class Tab2 extends Fragment {
     public Tab2() {
     }
     private TextView textView ;
-    private Button start, pause, reset, lap ;
+    private Button start, pause, reset, lap, btnResume ;
     private long MillisecondTime, StartTime, TimeBuff, UpdateTime = 0L ;
     private Handler handler;
     private int Seconds, Minutes, MilliSeconds ;
@@ -45,6 +46,10 @@ public class Tab2 extends Fragment {
     private String[] ListElements = new String[] {  };
     private List<String> ListElementsArrayList ;
     private ArrayAdapter<String> adapter ;
+    private boolean mIsStart = false;
+    private LinearLayout startLayout;
+    private LinearLayout pauseLayout;
+   // private LinearLayout lapLayout;
 
 
     public static Tab2 newInstance(String param1, String param2) {
@@ -80,6 +85,10 @@ public class Tab2 extends Fragment {
             reset = (Button) rootView.findViewById(R.id.button3);
             lap = (Button) rootView.findViewById(R.id.button4) ;
             listView = (ListView) rootView.findViewById(R.id.listview1);
+            startLayout = (LinearLayout) rootView.findViewById(R.id.start_layout);
+            pauseLayout = (LinearLayout) rootView.findViewById(R.id.pause_layout);
+          //  lapLayout = (LinearLayout) rootView.findViewById(R.id.lap_layout);
+            btnResume = (Button) rootView.findViewById(R.id.btn_resume);
             setUpUI();
 
         } catch (Exception ex) {
@@ -105,11 +114,12 @@ public class Tab2 extends Fragment {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                StartTime = SystemClock.uptimeMillis();
-                handler.postDelayed(runnable, 0);
-
-                reset.setEnabled(false);
+                startTimer();
+                btnResume.setVisibility(View.GONE);
+                pause.setVisibility(View.VISIBLE);
+               // reset.setVisibility(View.GONE);
+                //lap.setVisibility(View.VISIBLE);
+                toggleView(true);
 
             }
         });
@@ -118,11 +128,20 @@ public class Tab2 extends Fragment {
             @Override
             public void onClick(View view) {
 
+                System.out.println("====================>puase");
                 TimeBuff += MillisecondTime;
 
                 handler.removeCallbacks(runnable);
 
                 reset.setEnabled(true);
+                mIsStart = false;
+                btnResume.setVisibility(View.VISIBLE);
+                pause.setVisibility(View.GONE);
+               // lapLayout.setVisibility(View.GONE);
+                lap.setVisibility(View.GONE);
+                reset.setVisibility(View.VISIBLE);
+
+
 
             }
         });
@@ -144,20 +163,64 @@ public class Tab2 extends Fragment {
                 ListElementsArrayList.clear();
 
                 adapter.notifyDataSetChanged();
+                mIsStart = false;
+                toggleView(false);
             }
         });
 
         lap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("====================>lap");
+                if(mIsStart){
 
-                ListElementsArrayList.add(textView.getText().toString());
+                    ListElementsArrayList.add(textView.getText().toString());
+                    adapter.notifyDataSetChanged();
+                }
 
-                adapter.notifyDataSetChanged();
+
 
             }
         });
+
+        btnResume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnResume.setVisibility(View.GONE);
+                pause.setVisibility(View.VISIBLE);
+                //lapLayout.setVisibility(View.VISIBLE);
+                lap.setVisibility(View.VISIBLE);
+                reset.setVisibility(View.GONE);
+                startTimer();
+            }
+        });
     }
+
+    private void startTimer(){
+        StartTime = SystemClock.uptimeMillis();
+        handler.postDelayed(runnable, 0);
+        reset.setEnabled(false);
+        mIsStart = true;
+    }
+    private void toggleView(boolean isStart){
+
+        if(isStart){
+            startLayout.setVisibility(View.GONE);
+            pauseLayout.setVisibility(View.VISIBLE);
+           // lapLayout.setVisibility(View.VISIBLE);
+            lap.setVisibility(View.VISIBLE);
+            reset.setVisibility(View.GONE);
+        }
+        else {
+            startLayout.setVisibility(View.VISIBLE);
+            pauseLayout.setVisibility(View.GONE);
+           // lapLayout.setVisibility(View.GONE);
+            reset.setVisibility(View.VISIBLE);
+            lap.setVisibility(View.GONE);
+        }
+    }
+
+
 
 
     public void onButtonPressed(Uri uri) {

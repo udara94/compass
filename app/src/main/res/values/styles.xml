@@ -34,7 +34,11 @@
 
 
 
-
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.DarkActionBar" >
+        <item name="android:textColorPrimary">@color/purple</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">40dp</item>
+    </style>
 
  
 

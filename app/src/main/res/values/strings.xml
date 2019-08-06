@@ -9,6 +9,19 @@
     <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>
 
+    <string name="title_display_city">Display City</string>
+    <string name="summery_display_city">Enable city to display</string>
+    <string name="key_display_city">key_display_city</string>
+
+    <string name="title_display_province">Display Province</string>
+    <string name="summery_display_province">Enable province to display</string>
+    <string name="key_display_province">key_display_province</string>
+
+    <string name="title_display_location">Display Location</string>
+    <string name="summery_display_location">Enable location to display</string>
+    <string name="key_display_location">key_display_location</string>
+
+    <string name="display_degrees">Display Degrees</string>
     <string name="default_gallery_storage">My Videos</string>
     <string name="title_auto_upload">Auto upload</string>
     <string name="summary_upload_over_wifi">Upload the videos when wifi is available</string>

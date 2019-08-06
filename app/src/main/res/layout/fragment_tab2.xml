@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.vogella.android.compass.Time.Tab2"
-    android:background="@drawable/gradient_layout">
+    >
 
     <TextView
         android:text="00:00:00"
@@ -18,53 +18,107 @@
         android:id="@+id/textView"
         android:textSize="50dp"
         android:textStyle="bold"
-        android:textColor="#009688"
+        android:textColor="@color/purple"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"/>
 
-    <Button
-        android:text="Start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="41dp"
-        android:id="@+id/button" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-    <Button
-        android:text="Pause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:layout_alignBaseline="@+id/button"
-        android:layout_alignBottom="@+id/button"
-        android:layout_centerHorizontal="true" />
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/start_layout"
+            android:gravity="center|bottom"
+            android:layout_below="@+id/textView"
+            >
+            <Button
+                android:text="Start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/button"
+                android:textStyle="bold"
+                android:background="@drawable/round_button"
+                android:textColor="@color/white"/>
+        </LinearLayout>
 
-    <Button
-        android:text="Reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/button3" />
 
-    <Button
-        android:text="Save Lap"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:id="@+id/button4"
-        android:layout_below="@+id/button"
-        android:layout_centerHorizontal="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/pause_layout"
+            android:orientation="horizontal"
+            android:gravity="center|bottom"
+            android:visibility="gone"
+            android:layout_below="@+id/textView"
+            >
+            <Button
+                android:text="Pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button2"
+                android:layout_centerHorizontal="true"
+              android:background="@drawable/round_button_warn"
+                android:textColor="@color/white"
+                android:layout_marginRight="20dp"
+                android:textStyle="bold"/>
+            <Button
+                android:text="Resume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_resume"
+                android:layout_marginRight="20dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/round_button"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                android:textStyle="bold"/>
+
+            <Button
+                android:text="Reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/button2"
+                android:layout_marginLeft="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/button3"
+                android:background="@drawable/round_button_warn"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+            <Button
+                android:text="Save Lap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button4"
+                android:layout_below="@+id/button"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
+                android:background="@drawable/round_button"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+               />
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/button4"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
-        android:id="@+id/listview1"/>
+        android:layout_marginTop="50dp"
+        android:id="@+id/listview1"
+        android:layout_below="@+id/textView"
+        android:layout_marginBottom="60dp"/>
 
 </RelativeLayout>

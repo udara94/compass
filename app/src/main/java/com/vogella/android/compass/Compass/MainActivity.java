@@ -45,6 +45,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.onesignal.OneSignal;
 import com.vogella.android.compass.BuildConfig;
 import com.vogella.android.compass.Time.ClockActivity;
 import com.vogella.android.compass.Leveler.Level;
@@ -66,10 +67,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView mProvince;
    // private Button mLevelScreen;
     //private Button mSettingScreen;
-    private ImageView mSettingBtn;
+    //private ImageView mSettingBtn;
     private ImageView mShareBtn;
     private ImageView mLevelBtn;
     private ImageView mClockBtn;
+    public static MainActivity mainActivity;
 
 
     // record the compass picture angle turned
@@ -129,12 +131,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mProvince = (TextView) findViewById(R.id.province);
        // mLevelScreen = (Button) findViewById(R.id.go_to_level);
        // mSettingScreen = (Button) findViewById(R.id.go_to_settings);
-        mSettingBtn = (ImageView) findViewById(R.id.setting);
+       // mSettingBtn = (ImageView) findViewById(R.id.setting);
         mShareBtn = (ImageView) findViewById(R.id.share);
         mLevelBtn = (ImageView) findViewById(R.id.level);
         mClockBtn = (ImageView) findViewById(R.id.clock);
 
         init();
+        initOneSignal();
         startLocationButtonClick();
 
 //        mLevelScreen.setOnClickListener(new View.OnClickListener() {
@@ -146,13 +149,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 //        });
 
 
-        mSettingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(), SettingActivity.class);
-                startActivity(i);
-            }
-        });
+//        mSettingBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(getBaseContext(), SettingActivity.class);
+//                startActivity(i);
+//            }
+//        });
         mShareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,8 +180,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startActivity(i);
             }
         });
+
     }
 
+    private void initOneSignal() {
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
+    }
 
 
     private void init() {
@@ -396,6 +406,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             direction.setText("West");
         else if( degrees >= 293.0 && degrees < 338.0)
             direction.setText("North West");
+    }
+
+    public void toggleCheckBoxCity(boolean isDisable){
+        if(isDisable){
+           mCity.setVisibility(View.GONE);
+            System.out.println("================>isDisable"+isDisable);
+        }else {
+            mCity.setVisibility(View.VISIBLE);
+            System.out.println("================>isDisable"+isDisable);
+        }
     }
 
     @Override

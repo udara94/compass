@@ -8,6 +8,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -17,6 +18,7 @@ import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
+import com.vogella.android.compass.Compass.MainActivity;
 import com.vogella.android.compass.R;
 
 public class SettingActivity extends AppCompatPreferenceActivity {
@@ -37,9 +39,6 @@ public class SettingActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_main);
 
-            // gallery EditText change listener
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.key_gallery_name)));
-
             // notification preference change listener
             bindPreferenceSummaryToValue(findPreference(getString(R.string.key_notifications_new_message_ringtone)));
 
@@ -48,6 +47,23 @@ public class SettingActivity extends AppCompatPreferenceActivity {
             myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     sendFeedback(getActivity());
+                    return true;
+                }
+            });
+            final CheckBoxPreference displayCityPref = (CheckBoxPreference) findPreference("key_display_city");
+
+            displayCityPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+
+                    if(displayCityPref.isChecked()){
+                        System.out.println("=======================>>clicked"+displayCityPref.isChecked());
+                        ((MainActivity)getActivity()).toggleCheckBoxCity(true);
+                    }
+                    else {
+                        ((MainActivity)getActivity()).toggleCheckBoxCity(false);
+                    }
+
                     return true;
                 }
             });
@@ -114,13 +130,16 @@ public class SettingActivity extends AppCompatPreferenceActivity {
                     }
                 }
 
-            } else if (preference instanceof EditTextPreference) {
-                if (preference.getKey().equals("key_gallery_name")) {
-                    // update the changed gallery name to summary filed
-                    preference.setSummary(stringValue);
-                }
-            } else {
+            }
+//            else if (preference instanceof EditTextPreference) {
+//                if (preference.getKey().equals("key_gallery_name")) {
+//                    // update the changed gallery name to summary filed
+//                    preference.setSummary(stringValue);
+//                }
+//            }
+            else {
                 preference.setSummary(stringValue);
+                System.out.println("===============>"+stringValue);
             }
             return true;
         }

@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.vogella.android.compass.R;
 
-public class ClockActivity extends AppCompatActivity implements Tab1.OnFragmentInteractionListener, Tab2.OnFragmentInteractionListener, Tab3.OnFragmentInteractionListener {
+public class ClockActivity extends AppCompatActivity implements Tab2.OnFragmentInteractionListener, Tab3.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,6 @@ public class ClockActivity extends AppCompatActivity implements Tab1.OnFragmentI
         setContentView(R.layout.activity_clock);
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Clock"));
         tabLayout.addTab(tabLayout.newTab().setText("Stopwatch"));
         tabLayout.addTab(tabLayout.newTab().setText("Timer"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);

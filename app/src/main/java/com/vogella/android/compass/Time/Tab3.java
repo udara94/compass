@@ -49,7 +49,7 @@ public class Tab3 extends Fragment {
     private long totalMilliSeconds =0;
     private Button btnStart, btnPause, btnCancel, btnResume;
     private LinearLayout startLayout;
-    private LinearLayout pauseLayout, numPickLayout;
+    private LinearLayout pauseLayout, numPickLayout, mTimeTextLayout;
     private CountDownTimer waitTimer;
     private ProgressBar progressBar;
     private int pStatus = 0;
@@ -107,6 +107,7 @@ public class Tab3 extends Fragment {
             startLayout = (LinearLayout) rootView.findViewById(R.id.start_layout);
             pauseLayout = (LinearLayout) rootView.findViewById(R.id.pause_layout);
             numPickLayout = (LinearLayout) rootView.findViewById(R.id.num_picker_layout);
+            mTimeTextLayout = (LinearLayout) rootView.findViewById(R.id.time_text_layout);
 
             progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
 
@@ -143,8 +144,13 @@ public class Tab3 extends Fragment {
 
         }
         for(int i = 0; i< 100; i++){
-            String num = Integer.toString(i);
-            hourList.add(num);
+            if(i<10) {
+                String num = "0"+Integer.toString(i);
+                hourList.add(num);
+            }else {
+                String num = Integer.toString(i);
+                hourList.add(num);
+            }
         }
         //converting list to array
         secondsArray = new String[secondList.size()];
@@ -233,7 +239,7 @@ public class Tab3 extends Fragment {
         pStatus = (int)totalMilliSeconds;
         progressBar.setMax((int)totalMilliSeconds);
        // countDownStart();
-        System.out.println("===================>decrementValue"+decrementValue );
+       // System.out.println("===================>decrementValue"+decrementValue );
         if(totalMilliSeconds != 0){
             countDouwnTimer();
             toggleButtonSet(true);
@@ -242,15 +248,32 @@ public class Tab3 extends Fragment {
 
     }
 
+
+    private void resetNumberPicker(){
+
+        mMinutesPicker.setValue(0);
+        mHourPicker.setValue(0);
+        mSecondsPicker.setValue(0);
+
+    }
+
     private void toggleButtonSet(boolean status){
         if(status){
+            mTimeTextLayout.setVisibility(View.VISIBLE);
             numPickLayout.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
             startLayout.setVisibility(View.GONE);
             pauseLayout.setVisibility(View.VISIBLE);
+            btnResume.setVisibility(View.GONE);
+            btnPause.setVisibility(View.VISIBLE);
         }else {
+            mTimeTextLayout.setVisibility(View.GONE);
             numPickLayout.setVisibility(View.VISIBLE);
             startLayout.setVisibility(View.VISIBLE);
             pauseLayout.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+            btnResume.setVisibility(View.VISIBLE);
+            btnPause.setVisibility(View.GONE);
             resetTimer();
         }
     }
@@ -291,17 +314,22 @@ public class Tab3 extends Fragment {
                 txtSeconds.setText("" + String.format("%02d", seconds));
 
 
-                    progressBar.setProgress(pStatus);
-                    pStatus-= 1000;
+                progressBar.setProgress(pStatus);
+                pStatus = pStatus- 1000;
                 totalMilliSeconds = totalMilliSeconds -1000;
                 System.out.println("===================>totalMilliSeconds"+totalMilliSeconds );
-                System.out.println("===================>pStatus"+pStatus );
+                if(totalMilliSeconds<=0){
+                    waitTimer.onFinish();
+                }
+               // System.out.println("===================>pStatus"+pStatus );
             }
 
 
             public void onFinish() {
                toggleButtonSet(false);
-                progressBar.setProgress(pStatus);
+               resetNumberPicker();
+                //initializeData();
+                progressBar.setProgress(0);
                System.out.println("===================>finished");
             }
         }.start();
@@ -314,6 +342,8 @@ public class Tab3 extends Fragment {
             waitTimer=null;
         }
         toggleButtonSet(false);
+        resetNumberPicker();
+
     }
     private void pauseTimer(){
         waitTimer.cancel();
@@ -322,6 +352,7 @@ public class Tab3 extends Fragment {
     }
     private void resumeTimer(){
         waitTimer.start();
+        System.out.println("===================>totalMilliSeconds"+totalMilliSeconds);
         btnPause.setVisibility(View.VISIBLE);
         btnResume.setVisibility(View.GONE);
     }
