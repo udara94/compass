@@ -2,8 +2,10 @@ package com.vogella.android.compass.Compass;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -15,6 +17,9 @@ import android.net.Uri;
 import android.os.Looper;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -57,6 +62,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import android.Manifest;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     // define the display assembly compass picture
@@ -65,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView txtLocationResult;
     private TextView mCity;
     private TextView mProvince;
-   // private Button mLevelScreen;
+    // private Button mLevelScreen;
     //private Button mSettingScreen;
     //private ImageView mSettingBtn;
     private ImageView mShareBtn;
@@ -104,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private LocationCallback mLocationCallback;
     private Location mCurrentLocation;
     private Geocoder geocoder;
-
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     String city = "";
     String state = "";
@@ -129,9 +136,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         txtLocationResult = (TextView) findViewById(R.id.location_result);
         mCity = (TextView) findViewById(R.id.city);
         mProvince = (TextView) findViewById(R.id.province);
-       // mLevelScreen = (Button) findViewById(R.id.go_to_level);
-       // mSettingScreen = (Button) findViewById(R.id.go_to_settings);
-       // mSettingBtn = (ImageView) findViewById(R.id.setting);
+        // mLevelScreen = (Button) findViewById(R.id.go_to_level);
+        // mSettingScreen = (Button) findViewById(R.id.go_to_settings);
+        // mSettingBtn = (ImageView) findViewById(R.id.setting);
         mShareBtn = (ImageView) findViewById(R.id.share);
         mLevelBtn = (ImageView) findViewById(R.id.level);
         mClockBtn = (ImageView) findViewById(R.id.clock);
@@ -159,11 +166,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mShareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(Intent.ACTION_SEND);
-                myIntent.setType("text/plain");
-                String shareBody =  "Lat: " + mCurrentLocation.getLatitude() + ", " + "Lng: " + mCurrentLocation.getLongitude() +"\n"+city+", "+state;
-                myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
-                startActivity(Intent.createChooser(myIntent, "Share Using"));
+
+                if (checkLocationPermission()) {
+                    System.out.println("==============>11" + checkLocationPermission());
+                    if (mCurrentLocation != null) {
+
+                        shareLocation();
+                    }
+                } else {
+                    startLocationButtonClick();
+                }
+
+
             }
         });
         mLevelBtn.setOnClickListener(new View.OnClickListener() {
@@ -190,6 +204,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 .init();
     }
 
+    private void shareLocation() {
+        System.out.println("==============>22" + checkLocationPermission());
+        Intent myIntent = new Intent(Intent.ACTION_SEND);
+        myIntent.setType("text/plain");
+        String shareBody = "Lat: " + mCurrentLocation.getLatitude() + ", " + "Lng: " + mCurrentLocation.getLongitude() + "\n" + city + ", " + state;
+        myIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(myIntent, "Share Using"));
+    }
 
     private void init() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -312,9 +334,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 mCity.setText(city);
                 mProvince.setText(state);
 
-                System.out.println("==============>"+city);
-                System.out.println("==============>"+state);
-                System.out.println("==============>"+country);
+                System.out.println("==============>" + city);
+                System.out.println("==============>" + state);
+                System.out.println("==============>" + country);
                 txtLocationResult.setText(
                         "Lat: " + mCurrentLocation.getLatitude() + ", " +
                                 "Lng: " + mCurrentLocation.getLongitude()
@@ -325,13 +347,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 txtLocationResult.animate().alpha(1).setDuration(300);
 
                 // location last updated time
-               // txtUpdatedOn.setText("Last updated on: " + mLastUpdateTime);
-            }catch (Exception e){
+                // txtUpdatedOn.setText("Last updated on: " + mLastUpdateTime);
+            } catch (Exception e) {
                 System.out.println(e);
             }
 
         }
     }
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     private void openSettings() {
         Intent intent = new Intent();
@@ -365,7 +397,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         float degree = Math.round(event.values[0]);
 
         String output = Float.toString(degree);
-        tvHeading.setText(Html.fromHtml(output+"<sup>o</sup>"));
+        tvHeading.setText(Html.fromHtml(output + "<sup>o</sup>"));
 
         setDirection(degree);
         Log.d("TAG", Float.toString(degree));
@@ -390,31 +422,31 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private void setDirection(float degrees) {
 
-        if(degrees >= 338.0 || degrees >= 0.0 &&  degrees < 23.0)
+        if (degrees >= 338.0 || degrees >= 0.0 && degrees < 23.0)
             direction.setText("North");
-        else if(degrees >= 23.0 && degrees < 69.0)
+        else if (degrees >= 23.0 && degrees < 69.0)
             direction.setText("North East");
-        else if( degrees >= 69 && degrees < 113.0)
+        else if (degrees >= 69 && degrees < 113.0)
             direction.setText("East");
-        else if( degrees >= 113.0 && degrees < 169.0)
+        else if (degrees >= 113.0 && degrees < 169.0)
             direction.setText("South East");
-        else if( degrees >= 169.0 &&  degrees < 203.0)
+        else if (degrees >= 169.0 && degrees < 203.0)
             direction.setText("South");
-        else if(degrees >= 203.0 && degrees < 248.0)
+        else if (degrees >= 203.0 && degrees < 248.0)
             direction.setText("South West");
-        else if( degrees >= 248.0 && degrees < 293.0)
+        else if (degrees >= 248.0 && degrees < 293.0)
             direction.setText("West");
-        else if( degrees >= 293.0 && degrees < 338.0)
+        else if (degrees >= 293.0 && degrees < 338.0)
             direction.setText("North West");
     }
 
-    public void toggleCheckBoxCity(boolean isDisable){
-        if(isDisable){
-           mCity.setVisibility(View.GONE);
-            System.out.println("================>isDisable"+isDisable);
-        }else {
+    public void toggleCheckBoxCity(boolean isDisable) {
+        if (isDisable) {
+            mCity.setVisibility(View.GONE);
+            System.out.println("================>isDisable" + isDisable);
+        } else {
             mCity.setVisibility(View.VISIBLE);
-            System.out.println("================>isDisable"+isDisable);
+            System.out.println("================>isDisable" + isDisable);
         }
     }
 
